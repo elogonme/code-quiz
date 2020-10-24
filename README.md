@@ -1,5 +1,5 @@
 # Code Quiz ![Bootstrap](https://img.shields.io/badge/Powered%20By-JS-yellow)
-**Code Quiz** - timed coding quiz with multiple-choice questions. This app runs in the browser, and feature dynamically updated HTML and CSS powered by JavaScript. This timed quiz on JavaScript fundamentals that stores high scores for the user doing Quiz.
+**Code Quiz** - timed coding quiz with multiple-choice questions. This app runs in the browser, and feature dynamically updated HTML and CSS powered by JavaScript. This is timed quiz on JavaScript fundamentals that stores high scores for the user taking Quiz.
 
 ## Installation
 
