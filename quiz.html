@@ -29,13 +29,19 @@
   <body>
     <!-- Main page -->
     <main>
-        <div class="start-page container text-center col-lg-6 mt-5">
-            <h1>Coding Quiz Challenge</h1>
-            <p class="my-4">Try to answer the following code-related questons with in the time limit. Keep in mind that incorrect answers
-                 will penalize your Score Time limit by ten seconds!</p>
-            <a class="btn btn-info" href="quiz.html" role="button">Start Quiz</a>
+        <nav class="navbar navbar-light" style="background-color: #dde3ff;">
+            <a class="navbar-brand" href="#">View Highscores</a>
+            <div class="time">Time: <span id="timer">00</span></div>
+        </nav>
+
+        <div class="container col-lg-6 mt-5">
+            <div class="h2" id="question">Commonly used data types in JavaScript?</div>
+            <ul id="answers my-5">Answers</ul>
         </div>
 
     </main>
     
+    <!-- Javascript for code quiz -->
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>
