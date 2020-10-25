@@ -1,4 +1,4 @@
-// Main code
+// Questions stored in array
 var quiz = [
     {
         id: 1,
@@ -58,14 +58,52 @@ var quiz = [
         3:  'FirstAndLast',
         4:  'None of the above',
         ans: 1
-    }
+    },
+
+    {
+        id: 7,
+        question:  'Which of the following best describes JavaScript?',
+        1:  'a low-level programming language.',
+        2:  'a scripting language precompiled in the browser.',
+        3:  'a compiled scripting language.',
+        4:  'an object-oriented scripting language.',
+        ans: 4
+    },
+    
+    {
+        id: 8,
+        question:  'Using _______ statement is how you test for a specific condition.',
+        1:  'Select',
+        2:  'If',
+        3:  'Switch',
+        4:  'For',
+        ans: 2
+    },
+
+    {
+        id: 9,
+        question:  'The _______ method of an Array object adds and/or removes elements from an array.',
+        1:  'Reverse',
+        2:  'Shift',
+        3:  'Slice',
+        4:  'Splice',
+        ans: 4
+    },
+
+    {
+        id: 10,
+        question:  ' ______ tag is an extension to HTML that can enclose any number of JavaScript',
+        1:  '<SCRIPT>',
+        2:  '<BODY>',
+        3:  '<HEAD>',
+        4:  '<TITLE>',
+        ans: 1
+    },
+
 ];
 
 
 // Elements on page
-var totalTime = 30;
-var numberOfQuiz = quiz.length;
-var correctAnswers = 0;
 var timerEl = document.getElementById('timer'); // timer Element
 var quizEl = document.getElementById('question'); // question Element
 var ansListEl = document.getElementById('answers'); // question Element
@@ -74,6 +112,10 @@ var finalScoreEl = document.getElementById('highscore');
 var quizPage = document.querySelector('.quiz-page');
 var donePage = document.getElementById('done-page');
 var msgEl = document.querySelector('.msg') // Correct or Wrong answer message Element
+// Variables to use
+var totalTime = 30;
+var numberOfQuiz = quiz.length;
+var correctAnswers = 0;
 var quizNumber;
 var users = []; // Array to store users
 
