@@ -3,3 +3,20 @@
     margin-top: 100px;
     background-color: aqua;
 }
+
+li {
+    background-color: blueviolet;
+    border: 1px solid #fff;
+    padding: 1px 10px;
+    color: #fff;
+}
+
+li:hover {
+    background-color: rgb(181, 107, 250);
+    cursor: default;
+    ;
+}
+
+li:active {
+    background-color: rgb(120, 2, 230);
+}

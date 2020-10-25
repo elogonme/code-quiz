@@ -63,11 +63,12 @@ var quiz = [
 
 
 // Elements on page
-var totalTime = 10;
+var totalTime = 30;
 var numberOfQuiz = quiz.length;
 var timerEl = document.getElementById('timer'); // timer Element
 var quizEl = document.getElementById('question'); // question Element
 var ansListEl = document.getElementById('answers'); // question Element
+var msgEl = document.querySelector('.msg') // Correct or Wrong answer message Element
 // start timer
 time = setInterval(function() {
     totalTime--;
@@ -81,7 +82,7 @@ time = setInterval(function() {
 // pick random question
 // pick rundom number from 1 to total number of quiz
 var quizNumber = Math.floor(Math.random() * numberOfQuiz);
-quizOutput(quizNumber);
+quizOutput(quizNumber); // Display question and answers
 
 
 // output question and answers on page
@@ -106,10 +107,25 @@ function quizOutput(id) {
     
     for (var i = 1; i < 5; i++) {
         var ansEl = document.createElement('li');
-        ansEl.textContent = quiz[id][i];
+        ansEl.textContent = i + '. ' + quiz[id][i];
+        ansEl.setAttribute('data-index', i);
         ansListEl.appendChild(ansEl);
     }
     
 }
 
+// Function to handle checks on selected answer
+function checkAnswer(event) {
+    var element = event.target;
+    if (!element.matches('li')) return;
+    var index = element.getAttribute('data-index');
+
+    if (index == quiz[quizNumber].ans) {
+        msgEl.textContent = 'Correct'
+    } else {
+        msgEl.textContent = 'Wrong!'
+    }
+};
+
 // Main code
+ansListEl.addEventListener('click', checkAnswer);
