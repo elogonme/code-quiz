@@ -1,15 +1,15 @@
-var correctAnswers = localStorage.getItem('correctAnswers'); // get highscore from localstorage
+var user = JSON.parse(localStorage.getItem('user')); // get user from localstorage
 var highscoreEl = document.getElementById('highscore'); // highscore span Elelment
-
+var highscore;
 // Load correct answers number from last quiz and display as highscore
-if (!correctAnswers) {
-    correctAnswers = 0;
+if (!user) {
+    user = {};
+    user.highscore = 0;
 }
-if (correctAnswers < 9) {
-    highscoreEl.textContent = '0' + correctAnswers; // Add leading 0 if less than 9
-} else highscoreEl.textContent = correctAnswers;
+highscoreEl.textContent = user.highscore;
 
 function clearHighscore() {
     localStorage.removeItem('correctAnswers');
+    localStorage.removeItem('user');
     highscoreEl.textContent = '00';
 }
