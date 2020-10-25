@@ -75,6 +75,7 @@ var quizPage = document.querySelector('.quiz-page');
 var donePage = document.getElementById('done-page');
 var msgEl = document.querySelector('.msg') // Correct or Wrong answer message Element
 var quizNumber;
+var users = []; // Array to store users
 
 // Main code
 pickQuestion(); // Pick first question
@@ -164,14 +165,22 @@ function displayMessage(msg) {
     setTimeout(function() {msgEl.textContent = '';}, 1000); // Display message for 1 sec and then remove
 }
 
-// Save name function
+// Save user function
 function save() {
     var name = nameInputEl.value;
     var user = {
         name: name,
         highscore: correctAnswers
     }
-    // Save user and highscore to LocalStorage
-    localStorage.setItem('user', JSON.stringify(user));
+
+    users = JSON.parse(localStorage.getItem('users')); // Load existing users list from localstorage
+    console.log('users in stoarage ', users)
+    if (!users) { // If no users saved in loacalstorage initiate empty array
+        users = []; 
+    }
+    users.push(user);
+
+    // Save users to LocalStorage
+    localStorage.setItem('users', JSON.stringify(users));
     window.location.href="highscores.html"; // Go to highscores page
 }

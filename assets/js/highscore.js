@@ -1,15 +1,16 @@
-var user = JSON.parse(localStorage.getItem('user')); // get user from localstorage
-var highscoreEl = document.getElementById('highscore'); // highscore span Elelment
-var highscore;
-// Load correct answers number from last quiz and display as highscore
-if (!user) {
-    user = {};
-    user.highscore = 0;
+var users = JSON.parse(localStorage.getItem('users')); // get user from localstorage
+var userListEl = document.getElementById('user-list'); // user list Element
+
+console.log(users);
+userListEl.innerHTML = ''; // Clear any previous list
+// Display list of users with highscores
+for (var i  = 0; i < users.length; i++) {
+    var liElement = document.createElement('li');
+    liElement.textContent = users[i].name + ' - ' + users[i].highscore;
+    userListEl.appendChild(liElement);
 }
-highscoreEl.textContent = user.highscore;
 
 function clearHighscore() {
-    localStorage.removeItem('correctAnswers');
-    localStorage.removeItem('user');
-    highscoreEl.textContent = '00';
+    localStorage.removeItem('users');
+    userListEl.innerHTML = ''; // Clear any previous list
 }
