@@ -80,13 +80,13 @@ var users = []; // Array to store users
 // Main code
 pickQuestion(); // Pick first question
 ansListEl.addEventListener('click', checkAnswer); // Handle click on selected answer and chec if it is correct
+
 // start timer
 time = setInterval(function() {
     
     timer(totalTime);   
     if (totalTime <= 0) {   // If timer runs out
         clearInterval(time); // Stop timer
-        // localStorage.setItem('correctAnswers', correctAnswers); // Save number of correct answers to Local storage
         if (correctAnswers < 9) {
             correctAnswers = '0' + correctAnswers; // Add leading 0 if less than 9
         };
@@ -107,7 +107,7 @@ time = setInterval(function() {
     };
     totalTime--; // Decrement seconds count
 }, 1000);
-
+// ----------------------------------------------
 // pick random question functon
 function pickQuestion(){
     // pick rundom number from 1 to total number of quiz
@@ -115,15 +115,15 @@ function pickQuestion(){
     // output question and answers on page
     quizOutput(quizNumber); 
 }
-
-// Timer function
+// ----------------------------------------------
+// Timer output function
 function timer(sec){
     if (sec < 10) {
         sec = '0' + sec
     } else sec = sec.toString()
     timerEl.textContent = sec;
 }
-
+// ----------------------------------------------
 // Function to output Question and answers on page based on id number
 function quizOutput(id) {
     quizEl.textContent = quiz[id].question;
@@ -135,7 +135,7 @@ function quizOutput(id) {
         ansListEl.appendChild(ansEl);
     }
 };
-
+// ----------------------------------------------
 // Function to handle checks on selected answer
 function checkAnswer(event) {
     var element = event.target;
@@ -154,7 +154,7 @@ function checkAnswer(event) {
         pickQuestion(); // Pick new Question
     }
 };
-
+// ----------------------------------------------
 // Function to display message about correct or wrong answer
 function displayMessage(msg) {
     if (msg) {
@@ -164,21 +164,37 @@ function displayMessage(msg) {
     }
     setTimeout(function() {msgEl.textContent = '';}, 1000); // Display message for 1 sec and then remove
 }
-
+// ----------------------------------------------
 // Save user function
 function save() {
     var name = nameInputEl.value;
+    if (!name) {
+        document.querySelector('.error').classList.remove('hide'); // Display error message
+        return // If no name enetered wait for input
+    }
+    // Assign user's name info from entered name and final score
     var user = {
         name: name,
-        highscore: correctAnswers
+        highscore: correctAnswers // Need to change
     }
 
     users = JSON.parse(localStorage.getItem('users')); // Load existing users list from localstorage
-    console.log('users in stoarage ', users)
+    
     if (!users) { // If no users saved in loacalstorage initiate empty array
         users = []; 
     }
-    users.push(user);
+    
+    // Search in user list if user exist
+    var foundUserIndex = users.findIndex(function(savedUser){
+        return user.name === savedUser.name;
+    });
+    
+    // Update user's score user exists in list otherwise add new user
+    if (foundUserIndex !== -1) {
+        users[foundUserIndex] = user;
+    } else {
+        users.push(user);
+    }
 
     // Save users to LocalStorage
     localStorage.setItem('users', JSON.stringify(users));

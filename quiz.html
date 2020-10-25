@@ -31,8 +31,8 @@
     <main>
       <div class="quiz-page">
         <nav class="navbar navbar-light mx-auto" style="background-color: #dde3ff;">
-          <a class="navbar-brand" href="#">View Highscores</a>
-          <div class="time">Time: <span id="timer"></span></div>
+          <a class="navbar-brand" href="highscores.html">View Highscores</a>
+          <div class="time">Time: <span id="timer">00</span></div>
         </nav>
 
         <div class="container col-lg-6 mt-5">
@@ -41,7 +41,7 @@
             <div class="msg h5 text-muted border-top mt-2 font-italic"></div>
         </div>
       </div>
-      
+      <!-- End of test user dialog -->
       <div class="d-none" id="done-page">
         <div class=" container col-lg-6 mt-5 justify-content-center">
           <h2>All Done!</h2>
@@ -49,6 +49,7 @@
           <label for="name">Name</label>
           <input type="text" name="name" id="name" placeholder="Enter your name">
           <button type="submit" class="btn btn-info" onclick="save()">Submit</button>
+          <div class="text-danger error hide ml-5">Enter User name</div>
         </div>
       </div>
       
