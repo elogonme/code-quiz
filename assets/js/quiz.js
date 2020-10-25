@@ -103,57 +103,47 @@ var quiz = [
 ];
 
 
-// Elements on page
+// Elements on page to work with
 var timerEl = document.getElementById('timer'); // timer Element
 var quizEl = document.getElementById('question'); // question Element
 var ansListEl = document.getElementById('answers'); // question Element
 var nameInputEl = document.getElementById('name'); // name Input Element
-var finalScoreEl = document.getElementById('highscore'); 
-var quizPage = document.querySelector('.quiz-page');
-var donePage = document.getElementById('done-page');
+var finalScoreEl = document.getElementById('highscore'); // finals score display Element
+var quizPage = document.querySelector('.quiz-page'); // Quiz page div
+var donePage = document.getElementById('done-page'); // All Done dialog page div
 var msgEl = document.querySelector('.msg') // Correct or Wrong answer message Element
 // Variables to use
-var totalTime = 30;
-var numberOfQuiz = quiz.length;
+var timeLeft = 75; // total time for Quiz
 var correctAnswers = 0;
 var quizNumber;
 var users = []; // Array to store users
 
+// ----------------------------------------------
 // Main code
 pickQuestion(); // Pick first question
-ansListEl.addEventListener('click', checkAnswer); // Handle click on selected answer and chec if it is correct
+ansListEl.addEventListener('click', checkAnswer); // Handle click on selected answer and check if it is correct
 
 // start timer
 time = setInterval(function() {
     
-    timer(totalTime);   
-    if (totalTime <= 0) {   // If timer runs out
+    timer(timeLeft);   
+    if (timeLeft <= 0 || (quiz.length === 0)) {   // If timer runs out or all questions answered
         clearInterval(time); // Stop timer
-        if (correctAnswers < 9) {
-            correctAnswers = '0' + correctAnswers; // Add leading 0 if less than 9
-        };
-        user = JSON.parse(localStorage.getItem('user')); // Get saved user if exists
-        // Check if there is saved user was saved in localStorage
-        if (user) {
-            if (user.highscore < correctAnswers) { // Update highscore if new is higher
-                user.highscore = correctAnswers; // Update existing user's highscore
-            }
-            
-            localStorage.setItem('user', JSON.stringify(user)); // Save user to localStorage
-            window.location.href="highscores.html"; // Go to highscores page
-        }
-        finalScoreEl.textContent = correctAnswers; // Display final highscore
+        
+        finalScoreEl.textContent = timeLeft; // Display final highscore
+        timeLeft++;
         // Hide quiz-page and display user name input dialog
         quizPage.setAttribute('class', 'd-none'); // Turn off quiz-page
         donePage.setAttribute('class', 'd-block'); // Display done-page Dialog
     };
-    totalTime--; // Decrement seconds count
+    timeLeft--; // Decrement seconds count
 }, 1000);
+
 // ----------------------------------------------
 // pick random question functon
 function pickQuestion(){
     // pick rundom number from 1 to total number of quiz
-    quizNumber = Math.floor(Math.random() * numberOfQuiz);
+    quizNumber = Math.floor(Math.random() * quiz.length);
     // output question and answers on page
     quizOutput(quizNumber); 
 }
@@ -187,12 +177,17 @@ function checkAnswer(event) {
     if (index == quiz[quizNumber].ans) {
         displayMessage(true); 
         correctAnswers++; // Increment correct answers count
-        pickQuestion(); // Pick new Question
+        quiz.splice(quizNumber, 1); // Remove correctly answered question from array
+    
+        if (quiz.length !== 0) { // If any unanswered questions left then...
+            pickQuestion(); // Pick new Question
+        }
+        
     } else {
         displayMessage(false);
-        if ((totalTime - 10) > 0) {
-            totalTime -= 10; // Subtract timer by 10 sec because wrong answer was selected
-        } else totalTime = 0;
+        if ((timeLeft - 10) > 0) {
+            timeLeft -= 10; // Subtract timer by 10 sec because wrong answer was selected
+        } else timeLeft = 0;
         pickQuestion(); // Pick new Question
     }
 };
@@ -209,15 +204,16 @@ function displayMessage(msg) {
 // ----------------------------------------------
 // Save user function
 function save() {
-    var name = nameInputEl.value;
+    var name = nameInputEl.value; // Get name from input field
     if (!name) {
         document.querySelector('.error').classList.remove('hide'); // Display error message
         return // If no name enetered wait for input
     }
+
     // Assign user's name info from entered name and final score
     var user = {
         name: name,
-        highscore: correctAnswers // Need to change
+        highscore: timeLeft // Assign time left as a highscore
     }
 
     users = JSON.parse(localStorage.getItem('users')); // Load existing users list from localstorage

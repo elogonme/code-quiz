@@ -6,7 +6,10 @@
 Website can be accessed at [elogonme.github.io/code-quiz/](https://elogonme.github.io/code-quiz/)
 
 ## Usage 
-Try answer the following code-related questions with the time limit using mouse to click on correct answer. Keep in mind that incorrect answers will penalize your score time by ten seconds. Enter your name at the end of quiz to store your score.
+Try to answer the following JavaScript code-related questons within the time limit. Keep in mind that incorrect answers will penalize your Score Time limit by ten seconds! 
+Once you answered all questions correcty your highscore is equal to time left at the end. Otherwise if not all questions are answered correctly your score is zero. User name asked and has to be entered to store highscore. If user exists, highscore is updated.
+All user's highscores are saved and can be reviewed at Highscores page in descending order.
+You can clear highscores any time at highscores page.
 
 ![Demo of Main page](assets/img/demo.gif)
 
