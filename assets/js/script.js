@@ -65,32 +65,47 @@ var quiz = [
 // Elements on page
 var totalTime = 30;
 var numberOfQuiz = quiz.length;
+var correctAnswers = 0;
 var timerEl = document.getElementById('timer'); // timer Element
 var quizEl = document.getElementById('question'); // question Element
 var ansListEl = document.getElementById('answers'); // question Element
+var finalScoreEl = document.getElementById('highscore');
+var quizPage = document.querySelector('.quiz-page');
+var donePage = document.getElementById('done-page');
 var msgEl = document.querySelector('.msg') // Correct or Wrong answer message Element
+var quizNumber;
+pickQuestion(); // Pick first question
 // start timer
 time = setInterval(function() {
-    totalTime--;
+    
     timer(totalTime);   
-    if (totalTime === 0) {
-        clearInterval(time);
-        console.log('time is up!');
-        // End dialog
-    }
+    if (totalTime <= 0) {
+        clearInterval(time); // Stop timer
+        localStorage.setItem('correctAnswers', correctAnswers); // Save number of correct answers to Local storage
+        if (correctAnswers < 9) {
+            correctAnswers = '0' + correctAnswers; // Add leading 0 if less than 9
+        };
+        finalScoreEl.textContent = correctAnswers; // Display final highscore
+        quizPage.setAttribute('class', 'd-none');
+        donePage.setAttribute('class', 'd-block');
+        // window.location.href="highscores.html";
+    };
+    totalTime--;
 }, 1000);
-// pick random question
-// pick rundom number from 1 to total number of quiz
-var quizNumber = Math.floor(Math.random() * numberOfQuiz);
-quizOutput(quizNumber); // Display question and answers
 
+// pick random question functon
+function pickQuestion(){
+    // pick rundom number from 1 to total number of quiz
+    quizNumber = Math.floor(Math.random() * numberOfQuiz);
+    // output question and answers on page
+    quizOutput(quizNumber); 
+}
 
-// output question and answers on page
 // wait on input from user
-// compare input with correct answer
 // output correct or wrong message
-// subtract timer if message is wrong
+ansListEl.addEventListener('click', checkAnswer);
 // if timer runs out or all questions anwered - display end of quiz message and score
+
 // Enter initials and store name and score
 
 // Timer function
@@ -104,28 +119,42 @@ function timer(sec){
 // Function to output Question and answers on page based on id number
 function quizOutput(id) {
     quizEl.textContent = quiz[id].question;
-    
+    ansListEl.innerHTML = ''; // Clear all answers first
     for (var i = 1; i < 5; i++) {
         var ansEl = document.createElement('li');
         ansEl.textContent = i + '. ' + quiz[id][i];
         ansEl.setAttribute('data-index', i);
         ansListEl.appendChild(ansEl);
     }
-    
-}
+};
 
 // Function to handle checks on selected answer
 function checkAnswer(event) {
     var element = event.target;
-    if (!element.matches('li')) return;
-    var index = element.getAttribute('data-index');
-
+    if (!element.matches('li')) return; // guard if not li element is clicked
+    var index = element.getAttribute('data-index'); // Get id of selected answer
+    // compare input with correct answer
     if (index == quiz[quizNumber].ans) {
-        msgEl.textContent = 'Correct'
+        displayMessage(true);
+        correctAnswers++; // Increment correct answers count
+        pickQuestion(); // Pick new Question
     } else {
-        msgEl.textContent = 'Wrong!'
+        displayMessage(false);
+        if ((totalTime - 10) > 0) {
+            totalTime -= 10; // Subtract timer by 10 sec because wrong answer was selected
+        } else totalTime = 0;
+        pickQuestion(); // Pick new Question
     }
 };
 
-// Main code
-ansListEl.addEventListener('click', checkAnswer);
+// Function to display message about correct or wrong answer
+function displayMessage(msg) {
+    if (msg) {
+        msgEl.textContent = 'Correct'; // Displey "Correct" message
+    } else {
+        msgEl.textContent = 'Wrong!'; // Displey "Wrong" message
+    }
+    setTimeout(function() {msgEl.textContent = '';}, 1000); // Display message for 1 sec and then remove
+}
+
+
