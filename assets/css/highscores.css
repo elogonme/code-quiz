@@ -5,9 +5,13 @@
 }
 
 li {
-    background-color: rgb(148, 148, 148);
+    background-color:  #e6d3f8;
     border: 1px solid #fff;
     border-radius: 5px;
     padding: 1px 10px;
-    color: #fff;
+    list-style-position: inside;
+}
+
+ol {
+    list-style: decimal;
 }
