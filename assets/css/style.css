@@ -1,0 +1,27 @@
+// CSS
+.start-page {
+    margin-top: 100px;
+    background-color: aqua;
+}
+
+li {
+    background-color: #8a2be2;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 1px 10px;
+    color: #fff;
+}
+
+li:hover {
+    background-color: #b56bfa;
+    cursor: default;
+    ;
+}
+
+li:active {
+    background-color: #7802e6;
+}
+
+.hide {
+    display: none;
+}
